@@ -11,7 +11,7 @@ def cat_encoding(dataframe):
 
 def feature_engineering(dataframe):
     dataframe = cat_encoding(dataframe)
-    columns = dataframe.columns[1:]
-    return dataframe, columns
+    features = dataframe.columns[1:25]
+    return dataframe, features
 
 
