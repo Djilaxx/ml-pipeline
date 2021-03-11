@@ -11,5 +11,8 @@ def cat_encoding(dataframe):
 
 def feature_engineering(dataframe):
     dataframe = cat_encoding(dataframe)
-    features = dataframe.columns[1:31]
+    drop_variables = ["cat5", "cat3", "cat9", "cat12", "cont10", "cont7", "cat10", "cont0", "cat8", "cat13"]
+    dataframe = dataframe.drop(drop_variables, axis=1)
+
+    features = dataframe.columns[1:21]
     return dataframe, features
