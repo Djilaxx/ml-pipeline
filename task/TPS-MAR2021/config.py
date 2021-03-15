@@ -15,15 +15,23 @@ config.main.FOLD_FILE = "data/TPS-MAR2021/train_folds.csv"
 config.main.FOLD_NUMBER = 10
 config.main.FOLD_METHOD = "SKF"
 config.main.TARGET_VAR = "target"
-config.main.PREDICT_PROBA = True
+#######################
+# TRAINING PARAMETERS #
+#######################
+config.train = edict()
+config.train.ES = 200
+config.train.VERBOSE = 1000
+config.train.METRIC = "AUC"
+config.train.PREDICT_PROBA = False
 
+####################
+# MODEL PARAMETERS #
+####################
 ###################
 # HYPERPARAMETERS #
 ###################
-config.hyper = edict()
-config.hyper.es = 1600
-config.hyper.verbose = 1000
-config.hyper.LGBM_CL = {
+config.model = edict()
+config.model.LGBM_CL = {
     'objective': 'binary',
     'metric' : 'auc',
     'n_estimators' : 100000,
@@ -39,7 +47,7 @@ config.hyper.LGBM_CL = {
     'min_child_samples': 173
 }
 
-config.hyper.XGB_CL = {
+config.model.XGB_CL = {
     "objective": "binary:logistic",
     "eval_metric" : "auc",
     "seed": 95,

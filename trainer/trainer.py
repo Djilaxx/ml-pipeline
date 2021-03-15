@@ -28,11 +28,11 @@ class Trainer:
             return print("No Validation metric selected...")
         else:
             if predict_proba is True:
-                temp_valid = self.model.predict_proba(self.valid_x)[:; 1]
+                temp_valid = self.model.predict_proba(self.valid_x)[:, 1]
             else:
                 temp_valid = self.model.predict(self.valid_x)
             metric_score = metric(self.valid_y, temp_valid)
-        print(f"Validating using metric : {metric.__class__.__name__}")
+        print(f"Validating using metric : {metric.__name__}")
         print(f"Validation score {metric_score}")
         return metric_score
             

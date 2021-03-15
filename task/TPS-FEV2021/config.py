@@ -16,14 +16,22 @@ config.main.FOLD_FILE = "data/TPS-FEV2021/train_folds.csv"
 config.main.FOLD_NUMBER = 10
 config.main.FOLD_METHOD = "KF"
 config.main.TARGET_VAR = "target"
-config.main.PREDICT_PROBA = False
+#######################
+# TRAINING PARAMETERS #
+#######################
+config.train = edict()
+config.train.ES = 200
+config.train.VERBOSE = 1000
+config.train.METRIC = "MSE"
+config.train.PREDICT_PROBA = False
+####################
+# MODEL PARAMETERS #
+####################
 ###################
 # HYPERPARAMETERS #
 ###################
-config.hyper = edict()
-config.hyper.verbose = 1000
-config.hyper.es = 1600
-config.hyper.LGBM_REG = {
+config.model = edict()
+config.model.LGBM_REG = {
     'reg_alpha': 6.147694913504962,
     'reg_lambda': 0.002457826062076097,
     'colsample_bytree': 0.3,
@@ -38,7 +46,7 @@ config.hyper.LGBM_REG = {
     'cat_smooth': 39
 }
 
-config.hyper.XGB_REG = {
+config.model.XGB_REG = {
     "objective": "reg:squarederror",
     "n_estimators" : 4000,
     "max_depth": 6,
