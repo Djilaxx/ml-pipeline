@@ -64,7 +64,6 @@ def feature_engineering(dataframe, train=True):
     dataframe = year_var(dataframe)
     features_cat = get_cat_features(dataframe)
     dataframe = cat_encoding(dataframe, features_cat)
-    features = 
     if train=True:
         features = feature_select(dataframe)
     # RETURN DATAFRAME & ALL FEATURES NEEDED FOR TRAINING OR PREDICTION

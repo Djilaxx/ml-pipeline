@@ -40,7 +40,7 @@ def predict(task="TPS-FEV2021", lib = "LGBM", model_type = "REG"):
     final_preds = np.zeros(len(df))
     for i in range(config.main.FOLD_NUMBER):
         print(f"Starting prediction with model {i+1}")
-        preds = predict_for_fold(task, model_name, df[features], fold=i+1, predict_proba=config.main.PREDICT_PROBA)
+        preds = predict_for_fold(task, model_name, df[features], fold=i+1, predict_proba=config.train.PREDICT_PROBA)
         final_preds += preds
     
     final_preds /= config.main.FOLD_NUMBER

@@ -12,8 +12,9 @@ import joblib
 
 from tqdm import tqdm
 import matplotlib.pyplot as plt
+from trainer.trainer import Trainer
+from utils.metrics import metrics_dict
 from utils import folding
-import xgboost as xgb
 
 def train(folds=10, task="TPS-FEV2021", lib="LGBM", model_type="REG"):
     model_name = f"{lib}_{model_type}"
@@ -37,7 +38,10 @@ def train(folds=10, task="TPS-FEV2021", lib="LGBM", model_type="REG"):
     # MODEL
     for name, func in inspect.getmembers(importlib.import_module(f"models.{model_name}"), inspect.isfunction):
         if name == model_name:
-            model = func(**config.hyper[model_name])
+            model = func(**config.model[model_name])
+    
+    # METRIC USED
+    metric_selected = metrics_dict[config.train.METRIC]
 
     # START FOLD LOOP
     Path(os.path.join(config.main.PROJECT_PATH, "model_saved/")).mkdir(parents=True, exist_ok=True)
@@ -51,16 +55,29 @@ def train(folds=10, task="TPS-FEV2021", lib="LGBM", model_type="REG"):
         target_train = df_train[config.main.TARGET_VAR].values
         target_valid = df_valid[config.main.TARGET_VAR].values
         
-        # TRAINING A LGBM MODEL
-        model.fit(
-            df_train[features], 
-            target_train, 
-            eval_set=[(df_valid[features], target_valid)], 
-            early_stopping_rounds=config.hyper.es, 
-            verbose = 1000
+        # STARTING THE TRAINER
+        trainer = Trainer(
+            model = model, 
+            train_x = df_train, 
+            train_features = features,
+            train_y = target_train,
+            valid_x = df_valid,
+            valid_y = target_valid,
         )
+        # TRAIN THE MODEL
+        trainer.fit(es = config.train.ES, verbose=config.train.VERBOSE)
+        # VALIDATION STEP
+        trainer.validate(metric = metric_selected, predict_proba = config.train.PREDICT_PROBA)
 
-        # MODEL SAVING
+        #model.fit(
+        #    df_train[features], 
+        #    target_train, 
+        #    eval_set=[(df_valid[features], target_valid)], 
+        #    early_stopping_rounds=config.hyper.es, 
+        #    verbose = 1000
+        #)
+
+        # SAVING THE MODEL
         joblib.dump(model, f"{config.main.PROJECT_PATH}/model_saved/{model_name}_model_{fold+1}.joblib.dat")
 
 ##########

@@ -22,6 +22,7 @@ config.main.PREDICT_PROBA = True
 ###################
 config.hyper = edict()
 config.hyper.es = 1600
+config.hyper.verbose = 1000
 config.hyper.LGBM_CL = {
     'objective': 'binary',
     'metric' : 'auc',

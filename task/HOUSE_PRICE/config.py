@@ -16,13 +16,20 @@ config.main.FOLD_FILE = "data/HOUSE_PRICE/train_folds.csv"
 config.main.FOLD_NUMBER = 5
 config.main.FOLD_METHOD = "SKF"
 config.main.TARGET_VAR = "SalePrice"
-config.main.PREDICT_PROBA = False
-###################
-# HYPERPARAMETERS #
-###################
-config.hyper = edict()
-config.hyper.es = 200
-config.hyper.LGBM_REG = {
+#######################
+# TRAINING PARAMETERS #
+#######################
+config.train = edict()
+config.train.ES = 200
+config.train.VERBOSE = 1000
+config.train.METRIC = "MSE"
+config.train.PREDICT_PROBA = False
+
+####################
+# MODEL PARAMETERS #
+####################
+config.model = edict()
+config.model.LGBM_REG = {
     'reg_alpha': 6.147694913504962,
     'reg_lambda': 0.002457826062076097,
     'colsample_bytree': 0.3,
@@ -37,7 +44,7 @@ config.hyper.LGBM_REG = {
     'cat_smooth': 39
 }
 
-config.hyper.XGB_REG = {
+config.model.XGB_REG = {
     "objective": "reg:squarederror",
     "n_estimators" : 4000,
     "max_depth": 6,

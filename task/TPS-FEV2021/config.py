@@ -21,6 +21,7 @@ config.main.PREDICT_PROBA = False
 # HYPERPARAMETERS #
 ###################
 config.hyper = edict()
+config.hyper.verbose = 1000
 config.hyper.es = 1600
 config.hyper.LGBM_REG = {
     'reg_alpha': 6.147694913504962,
