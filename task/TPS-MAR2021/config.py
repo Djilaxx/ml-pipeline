@@ -31,6 +31,13 @@ config.train.PREDICT_PROBA = False
 # HYPERPARAMETERS #
 ###################
 config.model = edict()
+
+config.model.LOGIT_CL = {
+    "penalty" : "l2",
+    "random_state" : 95,
+    "max_iter" : 100,
+}
+
 config.model.LGBM_CL = {
     'objective': 'binary',
     'metric' : 'auc',

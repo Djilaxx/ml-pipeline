@@ -31,6 +31,8 @@ config.train.PREDICT_PROBA = False
 # HYPERPARAMETERS #
 ###################
 config.model = edict()
+
+config.model.LIN_REG = {}
 config.model.LGBM_REG = {
     'reg_alpha': 6.147694913504962,
     'reg_lambda': 0.002457826062076097,
