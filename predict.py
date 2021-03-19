@@ -15,8 +15,8 @@ import matplotlib.pyplot as plt
 import lightgbm as lgb 
 from utils import folding
 
-def predict_for_fold(task, model_name, test_data, fold=1, predict_proba=False):
-    model = joblib.load(f"task/{task}/model_saved/{model_name}_model_{fold}.joblib.dat")
+def predict_for_fold(project, complete_name, test_data, fold=1, predict_proba=False):
+    model = joblib.load(f"project/{project}/model_saved/{complete_name}_model_{fold}.joblib.dat")
     #model = lgb.Booster(model_file=f"task/{task}/model_saved/model_{fold}.txt")
     if predict_proba is True:
         temp_test = model.predict_proba(test_data)[:, 1]
@@ -24,23 +24,23 @@ def predict_for_fold(task, model_name, test_data, fold=1, predict_proba=False):
         temp_test = model.predict(test_data)
     return temp_test
 
-def predict(task="TPS-FEV2021", lib = "LGBM", model_type = "REG"):
-    model_name = f"{lib}_{model_type}"
-    print(f"Predictions on task : {task}")
-    config = getattr(importlib.import_module(f"task.{task}.config"), "config")
+def predict(project="TPS-FEV2021", model_name = "LGBM", model_task = "REG"):
+    complete_name = f"{model_name}_{model_task}"
+    print(f"Predictions on project : {project}")
+    config = getattr(importlib.import_module(f"project.{project}.config"), "config")
 
     # LOADING DATA FILE
     df = pd.read_csv(config.main.TEST_FILE)
 
     # FEATURE ENGINEERING
-    feature_eng = getattr(importlib.import_module(f"task.{task}.feature_eng"), "feature_engineering")
+    feature_eng = getattr(importlib.import_module(f"project.{project}.feature_eng"), "feature_engineering")
     df, features = feature_eng(df, train=False)
     
     # PREDICTIONS
     final_preds = np.zeros(len(df))
     for i in range(config.main.FOLD_NUMBER):
         print(f"Starting prediction with model {i+1}")
-        preds = predict_for_fold(task, model_name, df[features], fold=i+1, predict_proba=config.train.PREDICT_PROBA)
+        preds = predict_for_fold(project, complete_name, df[features], fold=i+1, predict_proba=config.train.PREDICT_PROBA)
         final_preds += preds
     
     final_preds /= config.main.FOLD_NUMBER
@@ -48,15 +48,15 @@ def predict(task="TPS-FEV2021", lib = "LGBM", model_type = "REG"):
     submission = pd.read_csv(config.main.SUBMISSION)
     submission[config.main.TARGET_VAR] = final_preds
 
-    submission.to_csv(f'task/{task}/submission_{model_name}.csv', index=False)
+    submission.to_csv(f'project/{project}/submission_{complete_name}.csv', index=False)
 
 ##########
 # PARSER #
 ##########
 parser = argparse.ArgumentParser()
-parser.add_argument("--task", type=str, default="TPS-FEV2021")
-parser.add_argument("--lib", type=str, default="LGBM")
-parser.add_argument("--model_type", type=str, default="REG")
+parser.add_argument("--project", type=str, default="TPS-FEV2021")
+parser.add_argument("--model_name", type=str, default="LGBM")
+parser.add_argument("--model_task", type=str, default="REG")
 
 args = parser.parse_args()
 ##################
@@ -65,7 +65,7 @@ args = parser.parse_args()
 if __name__ == "__main__":
     print("Prediction start...")
     predict(
-        task=args.task,
-        lib=args.lib,
-        model_type=args.model_type
+        project=args.project,
+        model_name=args.model_name,
+        model_task=args.model_task
     )

@@ -16,10 +16,10 @@ from trainer.trainer import Trainer
 from utils.metrics import metrics_dict
 from utils import folding
 
-def train(folds=10, task="TPS-FEV2021", lib="LGBM", model_type="REG"):
-    model_name = f"{lib}_{model_type}"
-    print(f"Training on task : {task} for {folds} folds with {model_name} model")
-    config = getattr(importlib.import_module(f"task.{task}.config"), "config")
+def train(folds=10, project="TPS-FEV2021", model_name="LGBM", model_task="REG"):
+    complete_name = f"{model_name}_{model_task}"
+    print(f"Training on task : {project} for {folds} folds with {complete_name} model")
+    config = getattr(importlib.import_module(f"project.{project}.config"), "config")
 
     #CREATING FOLDS
     folding.create_folds(datapath=config.main.TRAIN_FILE,
@@ -32,13 +32,13 @@ def train(folds=10, task="TPS-FEV2021", lib="LGBM", model_type="REG"):
     df = pd.read_csv(config.main.FOLD_FILE)
 
     # FEATURE ENGINEERING
-    feature_eng = getattr(importlib.import_module(f"task.{task}.feature_eng"), "feature_engineering")
+    feature_eng = getattr(importlib.import_module(f"project.{project}.feature_eng"), "feature_engineering")
     df, features = feature_eng(df)
 
     # MODEL
-    for name, func in inspect.getmembers(importlib.import_module(f"models.{model_name}"), inspect.isfunction):
-        if name == model_name:
-            model = func(**config.model[model_name])
+    for name, func in inspect.getmembers(importlib.import_module(f"models.{complete_name}"), inspect.isfunction):
+        if name == complete_name:
+            model = func(**config.model[complete_name])
     
     # METRIC USED
     metric_selected = metrics_dict[config.train.METRIC]
@@ -78,16 +78,16 @@ def train(folds=10, task="TPS-FEV2021", lib="LGBM", model_type="REG"):
         #)
 
         # SAVING THE MODEL
-        joblib.dump(model, f"{config.main.PROJECT_PATH}/model_saved/{model_name}_model_{fold+1}.joblib.dat")
+        joblib.dump(model, f"{config.main.PROJECT_PATH}/model_saved/{complete_name}_model_{fold+1}.joblib.dat")
 
 ##########
 # PARSER #
 ##########
 parser = argparse.ArgumentParser()
 parser.add_argument("--folds", type=int, default=10)
-parser.add_argument("--task", type=str, default="TPS-FEV2021")
-parser.add_argument("--lib", type=str, default="LGBM")
-parser.add_argument("--model_type", type=str, default="REG")
+parser.add_argument("--project", type=str, default="TPS-FEV2021")
+parser.add_argument("--model_name", type=str, default="LGBM")
+parser.add_argument("--model_task", type=str, default="REG")
 
 args = parser.parse_args()
 ##################
@@ -97,7 +97,7 @@ if __name__ == "__main__":
     print("Training start...")
     train(
         folds=args.folds,
-        task=args.task,
-        lib=args.lib,
-        model_type=args.model_type
+        project=args.project,
+        model_name=args.model_name,
+        model_task=args.model_task
     )
