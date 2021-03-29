@@ -39,3 +39,5 @@ python -m predict
 --model_task=REG
 ```
 
+### Notebooks
+the notebooks/ folder contain many Jupyter notebooks with baseline code for different task that can help when building a model for a project, things like model selection, feature selection, basic EDA, hyperparameter optimization, model evaluation etc...
