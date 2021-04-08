@@ -24,7 +24,7 @@ def predict_for_fold(project, complete_name, test_data, fold=1, predict_proba=Fa
         temp_test = model.predict(test_data)
     return temp_test
 
-def predict(project="TPS-FEV2021", model_name = "LGBM", model_task = "REG"):
+def predict(project="TPS-FEV2021", model_name = "LGBM", model_task = "REG", get_int_preds=True):
     complete_name = f"{model_name}_{model_task}"
     print(f"Predictions on project : {project}")
     config = getattr(importlib.import_module(f"project.{project}.config"), "config")
@@ -44,11 +44,22 @@ def predict(project="TPS-FEV2021", model_name = "LGBM", model_task = "REG"):
         final_preds += preds
     
     final_preds /= config.main.FOLD_NUMBER
-
-    submission = pd.read_csv(config.main.SUBMISSION)
-    submission[config.main.TARGET_VAR] = final_preds
-
-    submission.to_csv(f'project/{project}/submission_{complete_name}.csv', index=False)
+    if get_int_preds is True:
+        final_int_preds = []
+        threshold=0.5
+        for proba in final_preds:
+            if proba >= threshold:
+                pred_int = 1
+            else:
+                pred_int = 0
+            final_int_preds.append(pred_int)
+        submission = pd.read_csv(config.main.SUBMISSION)
+        submission[config.main.TARGET_VAR] = final_int_preds
+        submission.to_csv(f'project/{project}/submission_{complete_name}.csv', index=False)
+    else:
+        submission = pd.read_csv(config.main.SUBMISSION)
+        submission[config.main.TARGET_VAR] = final_preds
+        submission.to_csv(f'project/{project}/submission_{complete_name}.csv', index=False)
 
 ##########
 # PARSER #
@@ -57,6 +68,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--project", type=str, default="TPS-FEV2021")
 parser.add_argument("--model_name", type=str, default="LGBM")
 parser.add_argument("--model_task", type=str, default="REG")
+parser.add_argument("--get_int_preds", type=bool, default=True)
 
 args = parser.parse_args()
 ##################
@@ -67,5 +79,6 @@ if __name__ == "__main__":
     predict(
         project=args.project,
         model_name=args.model_name,
-        model_task=args.model_task
+        model_task=args.model_task,
+        get_int_preds=args.get_int_preds
     )
