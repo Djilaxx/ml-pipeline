@@ -16,11 +16,10 @@ from trainer.trainer import Trainer
 from utils.metrics import metrics_dict
 from utils import folding
 
-def train(folds=10, project="TPS-FEV2021", model_name="LGBM", model_task="REG"):
-    complete_name = f"{model_name}_{model_task}"
-    print(f"Training on task : {project} for {folds} folds with {complete_name} model")
+def train(folds=10, project="TPS-FEV2021", model_name="LGBM"):
+    print(f"Training on task : {project} for {folds} folds with {model_name} model")
     config = getattr(importlib.import_module(f"project.{project}.config"), "config")
-
+    complete_name = f"{model_name}_{config.main.TASK}"
     #CREATING FOLDS
     folding.create_folds(datapath=config.main.TRAIN_FILE,
                         output_path=config.main.FOLD_FILE,
@@ -87,7 +86,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--folds", type=int, default=10)
 parser.add_argument("--project", type=str, default="TPS-FEV2021")
 parser.add_argument("--model_name", type=str, default="LGBM")
-parser.add_argument("--model_task", type=str, default="REG")
 
 args = parser.parse_args()
 ##################
@@ -98,6 +96,5 @@ if __name__ == "__main__":
     train(
         folds=args.folds,
         project=args.project,
-        model_name=args.model_name,
-        model_task=args.model_task
-    )
+        model_name=args.model_name    
+        )

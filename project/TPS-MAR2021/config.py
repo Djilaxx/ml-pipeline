@@ -12,6 +12,7 @@ config.main.TRAIN_FILE = "data/TPS-MAR2021/train.csv"
 config.main.TEST_FILE = "data/TPS-MAR2021/test.csv"
 config.main.SUBMISSION = "data/TPS-MAR2021/sample_submission.csv"
 config.main.FOLD_FILE = "data/TPS-MAR2021/train_folds.csv"
+config.main.TASK = "CLASSIFICATION"
 config.main.FOLD_NUMBER = 10
 config.main.FOLD_METHOD = "SKF"
 config.main.TARGET_VAR = "target"
@@ -32,13 +33,13 @@ config.train.PREDICT_PROBA = False
 ###################
 config.model = edict()
 
-config.model.LOGIT_CL = {
+config.model.LOGIT_CLASSIFICATION = {
     "penalty" : "l2",
     "random_state" : 95,
     "max_iter" : 100,
 }
 
-config.model.LGBM_CL = {
+config.model.LGBM_CLASSIFICATION = {
     'objective': 'binary',
     'metric' : 'auc',
     'n_estimators' : 100000,
@@ -54,7 +55,7 @@ config.model.LGBM_CL = {
     'min_child_samples': 173
 }
 
-config.model.XGB_CL = {
+config.model.XGB_CLASSIFICATION = {
     "objective": "binary:logistic",
     "eval_metric" : "auc",
     "seed": 95,

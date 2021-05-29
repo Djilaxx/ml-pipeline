@@ -13,6 +13,7 @@ config.main.TRAIN_FILE = "data/HOUSE_PRICE/train.csv"
 config.main.TEST_FILE = "data/HOUSE_PRICE/test.csv"
 config.main.SUBMISSION = "data/HOUSE_PRICE/sample_submission.csv"
 config.main.FOLD_FILE = "data/HOUSE_PRICE/train_folds.csv"
+config.main.TASK = "REGRESSION"
 config.main.FOLD_NUMBER = 5
 config.main.FOLD_METHOD = "SKF"
 config.main.TARGET_VAR = "SalePrice"
@@ -29,7 +30,7 @@ config.train.PREDICT_PROBA = False
 # MODEL PARAMETERS #
 ####################
 config.model = edict()
-config.model.LGBM_REG = {
+config.model.LGBM_REGRESSION = {
     'reg_alpha': 6.147694913504962,
     'reg_lambda': 0.002457826062076097,
     'colsample_bytree': 0.3,
@@ -44,7 +45,7 @@ config.model.LGBM_REG = {
     'cat_smooth': 39
 }
 
-config.model.XGB_REG = {
+config.model.XGB_REGRESSION = {
     "objective": "reg:squarederror",
     "n_estimators" : 4000,
     "max_depth": 6,

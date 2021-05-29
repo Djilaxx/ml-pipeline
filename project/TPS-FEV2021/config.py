@@ -13,6 +13,7 @@ config.main.TRAIN_FILE = "data/TPS-FEV2021/train.csv"
 config.main.TEST_FILE = "data/TPS-FEV2021/test.csv"
 config.main.SUBMISSION = "data/TPS-FEV2021/sample_submission.csv"
 config.main.FOLD_FILE = "data/TPS-FEV2021/train_folds.csv"
+config.main.TASK = "REGRESSION"
 config.main.FOLD_NUMBER = 10
 config.main.FOLD_METHOD = "KF"
 config.main.TARGET_VAR = "target"
@@ -32,8 +33,8 @@ config.train.PREDICT_PROBA = False
 ###################
 config.model = edict()
 
-config.model.LIN_REG = {}
-config.model.LGBM_REG = {
+config.model.LIN_REGRESSION = {}
+config.model.LGBM_REGRESSION = {
     'reg_alpha': 6.147694913504962,
     'reg_lambda': 0.002457826062076097,
     'colsample_bytree': 0.3,
@@ -48,7 +49,7 @@ config.model.LGBM_REG = {
     'cat_smooth': 39
 }
 
-config.model.XGB_REG = {
+config.model.XGB_REGRESSION = {
     "objective": "reg:squarederror",
     "n_estimators" : 4000,
     "max_depth": 6,

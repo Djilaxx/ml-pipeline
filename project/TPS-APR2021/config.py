@@ -12,6 +12,7 @@ config.main.TRAIN_FILE = "data/TPS-APR2021/train.csv"
 config.main.TEST_FILE = "data/TPS-APR2021/test.csv"
 config.main.SUBMISSION = "data/TPS-APR2021/sample_submission.csv"
 config.main.FOLD_FILE = "data/TPS-APR2021/train_folds.csv"
+config.main.TASK = "CLASSIFICATION"
 config.main.FOLD_NUMBER = 10
 config.main.FOLD_METHOD = "SKF"
 config.main.TARGET_VAR = "Survived"
@@ -19,8 +20,8 @@ config.main.TARGET_VAR = "Survived"
 # TRAINING PARAMETERS #
 #######################
 config.train = edict()
-config.train.ES = 200
-config.train.VERBOSE = 1000
+config.train.ES = 50
+config.train.VERBOSE = 100
 config.train.METRIC = "ACCURACY"
 config.train.PREDICT_PROBA = True
 
@@ -32,29 +33,29 @@ config.train.PREDICT_PROBA = True
 ###################
 config.model = edict()
 
-config.model.LOGIT_CL = {
+config.model.LOGIT_CLASSIFICATION = {
     "penalty" : "l2",
     "random_state" : 95,
     "max_iter" : 100,
 }
 
-config.model.LGBM_CL = {
+config.model.LGBM_CLASSIFICATION = {
     'objective': 'binary',
-    'metric' : 'auc',
-    'n_estimators' : 100000,
+    'metric' : 'binary_error',
+    'n_estimators' : 1000,
     'random_state' : 95,
-    'cat_smooth' : 30,
-    'reg_alpha': 0.0031293275223408185,
-    'reg_lambda': 0.04787145507141445,
-    'colsample_bytree': 0.3,
-    'subsample': 0.6,
-    'learning_rate': 0.008,
-    'max_depth': 100,
-    'num_leaves': 584,
-    'min_child_samples': 173
+    'cat_smooth' : 74,
+    'reg_alpha': 0.023013164688329528, 
+    'reg_lambda': 0.003811720979048805, 
+    'colsample_bytree': 0.3, 
+    'subsample': 0.6, 
+    'learning_rate': 0.02, 
+    'max_depth': 100, 
+    'num_leaves': 186, 
+    'min_child_samples': 225,
 }
 
-config.model.XGB_CL = {
+config.model.XGB_CLASSIFICATION = {
     "objective": "binary:logistic",
     "eval_metric" : "auc",
     "seed": 95,

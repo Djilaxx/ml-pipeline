@@ -10,7 +10,7 @@ import numpy as np
 from pathlib import Path
 import joblib
 
-from tqdm import tqdm
+
 import matplotlib.pyplot as plt
 import lightgbm as lgb 
 from utils import folding
@@ -24,10 +24,10 @@ def predict_for_fold(project, complete_name, test_data, fold=1, predict_proba=Fa
         temp_test = model.predict(test_data)
     return temp_test
 
-def predict(project="TPS-FEV2021", model_name = "LGBM", model_task = "REG", get_int_preds=True):
-    complete_name = f"{model_name}_{model_task}"
+def predict(project="TPS-FEV2021", model_name = "LGBM", get_int_preds=False):
     print(f"Predictions on project : {project}")
     config = getattr(importlib.import_module(f"project.{project}.config"), "config")
+    complete_name = f"{model_name}_{config.main.TASK}"
 
     # LOADING DATA FILE
     df = pd.read_csv(config.main.TEST_FILE)
@@ -67,8 +67,7 @@ def predict(project="TPS-FEV2021", model_name = "LGBM", model_task = "REG", get_
 parser = argparse.ArgumentParser()
 parser.add_argument("--project", type=str, default="TPS-FEV2021")
 parser.add_argument("--model_name", type=str, default="LGBM")
-parser.add_argument("--model_task", type=str, default="REG")
-parser.add_argument("--get_int_preds", type=bool, default=True)
+parser.add_argument("--get_int_preds", type=bool, default=False)
 
 args = parser.parse_args()
 ##################
@@ -79,6 +78,5 @@ if __name__ == "__main__":
     predict(
         project=args.project,
         model_name=args.model_name,
-        model_task=args.model_task,
         get_int_preds=args.get_int_preds
     )
