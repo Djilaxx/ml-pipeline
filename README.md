@@ -18,25 +18,25 @@ python -m pip install -r requirements.txt
 ### **Train**
 
 ```
-python -m train 
+python -m train
+--run_number=1
 --folds=10 
 --project=TPS-FEV2021 
 --model_name=LGBM 
---model_task=REG
 ```
 
+* **run_number** : int, allow you to track the number of training runs you did on a project
 * **folds** : int, number of folds - if folds=5 we'll divide the dataset in five part and train five models (each model will be trained on four part and validated on the last)
 * **project** : the project name you want to train a model on. 
 * **model_name** : the name of the model you want to train 
-* **model_task** : **REG** or **CL** Regression or Classification task
 
 ### **Predict**
 
 ```
-python -m predict 
+python -m predict
+--run_number=1
 --project=TPS-FEV2021 
 --model_name=LGBM 
---model_task=REG
 ```
 
 ### Notebooks
