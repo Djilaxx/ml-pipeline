@@ -18,7 +18,7 @@ from utils import folding
 
 def train(run_number, folds=10, project="TPS-FEV2021", model_name="LGBM"):
     print(f"Starting run number {run_number}, training on project : {project} for {folds} folds with {model_name} model")
-    config = getattr(importlib.import_module(f"project.{project}.config"), "config")
+    config = getattr(importlib.import_module(f"projects.{project}.config"), "config")
     complete_name = f"{model_name}_{config.main.TASK}"
     #CREATING FOLDS
     folding.create_folds(datapath=config.main.TRAIN_FILE,
@@ -31,7 +31,7 @@ def train(run_number, folds=10, project="TPS-FEV2021", model_name="LGBM"):
     df = pd.read_csv(config.main.FOLD_FILE)
 
     # FEATURE ENGINEERING
-    feature_eng = getattr(importlib.import_module(f"project.{project}.feature_eng"), "feature_engineering")
+    feature_eng = getattr(importlib.import_module(f"projects.{project}.feature_eng"), "feature_engineering")
     df, features = feature_eng(df)
 
     # MODEL
