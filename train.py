@@ -68,14 +68,6 @@ def train(run_number, folds=10, project="TPS-FEV2021", model_name="LGBM"):
         # VALIDATION STEP
         trainer.validate(metric = metric_selected, predict_proba = config.train.PREDICT_PROBA)
 
-        #model.fit(
-        #    df_train[features], 
-        #    target_train, 
-        #    eval_set=[(df_valid[features], target_valid)], 
-        #    early_stopping_rounds=config.hyper.es, 
-        #    verbose = 1000
-        #)
-
         # SAVING THE MODEL
         joblib.dump(model, f"{config.main.PROJECT_PATH}/model_saved/{complete_name}_model_{fold+1}_{run_number}.joblib.dat")
 
