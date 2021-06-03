@@ -7,7 +7,7 @@ config = edict()
 # main is the config section related to basic info on the project
 # data repo, data format, folding etc... data preparation
 config.main = edict()
-config.main.PROJECT_PATH = "project/TPS-APR2021/"
+config.main.PROJECT_PATH = "projects/TPS-APR2021/"
 config.main.TRAIN_FILE = "data/TPS-APR2021/train.csv"
 config.main.TEST_FILE = "data/TPS-APR2021/test.csv"
 config.main.SUBMISSION = "data/TPS-APR2021/sample_submission.csv"

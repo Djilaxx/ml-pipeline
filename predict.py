@@ -16,7 +16,7 @@ import lightgbm as lgb
 from utils import folding
 
 def predict_for_fold(project, complete_name, test_data, fold=1, predict_proba=False):
-    model = joblib.load(f"project/{project}/model_saved/{complete_name}_model_{fold}.joblib.dat")
+    model = joblib.load(f"projects/{project}/model_saved/{complete_name}_model_{fold}.joblib.dat")
     #model = lgb.Booster(model_file=f"task/{task}/model_saved/model_{fold}.txt")
     if predict_proba is True:
         temp_test = model.predict_proba(test_data)[:, 1]

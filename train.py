@@ -16,8 +16,8 @@ from trainer.trainer import Trainer
 from utils.metrics import metrics_dict
 from utils import folding
 
-def train(folds=10, project="TPS-FEV2021", model_name="LGBM"):
-    print(f"Training on task : {project} for {folds} folds with {model_name} model")
+def train(run_number, folds=10, project="TPS-FEV2021", model_name="LGBM"):
+    print(f"Starting run number {run_number}, training on project : {project} for {folds} folds with {model_name} model")
     config = getattr(importlib.import_module(f"project.{project}.config"), "config")
     complete_name = f"{model_name}_{config.main.TASK}"
     #CREATING FOLDS
@@ -77,12 +77,13 @@ def train(folds=10, project="TPS-FEV2021", model_name="LGBM"):
         #)
 
         # SAVING THE MODEL
-        joblib.dump(model, f"{config.main.PROJECT_PATH}/model_saved/{complete_name}_model_{fold+1}.joblib.dat")
+        joblib.dump(model, f"{config.main.PROJECT_PATH}/model_saved/{complete_name}_model_{fold+1}_{run_number}.joblib.dat")
 
 ##########
 # PARSER #
 ##########
 parser = argparse.ArgumentParser()
+parser.add_argument("--run_number", type=int)
 parser.add_argument("--folds", type=int, default=10)
 parser.add_argument("--project", type=str, default="TPS-FEV2021")
 parser.add_argument("--model_name", type=str, default="LGBM")
@@ -94,6 +95,7 @@ args = parser.parse_args()
 if __name__ == "__main__":
     print("Training start...")
     train(
+        run_number=args.run_number,
         folds=args.folds,
         project=args.project,
         model_name=args.model_name    

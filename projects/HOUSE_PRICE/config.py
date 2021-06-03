@@ -8,15 +8,15 @@ config = edict()
 # main is the config section related to basic info on the project
 # data repo, data format, folding etc... data preparation
 config.main = edict()
-config.main.PROJECT_PATH = "project/TPS-FEV2021/"
-config.main.TRAIN_FILE = "data/TPS-FEV2021/train.csv"
-config.main.TEST_FILE = "data/TPS-FEV2021/test.csv"
-config.main.SUBMISSION = "data/TPS-FEV2021/sample_submission.csv"
-config.main.FOLD_FILE = "data/TPS-FEV2021/train_folds.csv"
+config.main.PROJECT_PATH = "projects/HOUSE_PRICE/"
+config.main.TRAIN_FILE = "data/HOUSE_PRICE/train.csv"
+config.main.TEST_FILE = "data/HOUSE_PRICE/test.csv"
+config.main.SUBMISSION = "data/HOUSE_PRICE/sample_submission.csv"
+config.main.FOLD_FILE = "data/HOUSE_PRICE/train_folds.csv"
 config.main.TASK = "REGRESSION"
-config.main.FOLD_NUMBER = 10
-config.main.FOLD_METHOD = "KF"
-config.main.TARGET_VAR = "target"
+config.main.FOLD_NUMBER = 5
+config.main.FOLD_METHOD = "SKF"
+config.main.TARGET_VAR = "SalePrice"
 #######################
 # TRAINING PARAMETERS #
 #######################
@@ -25,15 +25,11 @@ config.train.ES = 200
 config.train.VERBOSE = 1000
 config.train.METRIC = "MSE"
 config.train.PREDICT_PROBA = False
+
 ####################
 # MODEL PARAMETERS #
 ####################
-###################
-# HYPERPARAMETERS #
-###################
 config.model = edict()
-
-config.model.LIN_REGRESSION = {}
 config.model.LGBM_REGRESSION = {
     'reg_alpha': 6.147694913504962,
     'reg_lambda': 0.002457826062076097,
@@ -44,7 +40,7 @@ config.model.LGBM_REGRESSION = {
     'num_leaves': 111,
     'min_child_samples': 285,
     'random_state': 95,
-    'n_estimators': 5000,
+    'n_estimators': 200000,
     'metric': 'rmse',
     'cat_smooth': 39
 }
