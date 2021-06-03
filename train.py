@@ -4,14 +4,10 @@
 # SYS IMPORT
 import os, inspect, importlib, argparse
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-import gc
 import pandas as pd
-import numpy as np
 from pathlib import Path
 import joblib
 
-from tqdm import tqdm
-import matplotlib.pyplot as plt
 from trainer.trainer import Trainer
 from utils.metrics import metrics_dict
 from utils import folding
