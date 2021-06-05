@@ -128,3 +128,4 @@ dmypy.json
 model_saved/
 CREDIT_CARD/
 submission*
+wandb/

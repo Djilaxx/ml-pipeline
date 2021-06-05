@@ -1,5 +1,4 @@
 from easydict import EasyDict as edict
-import optuna
 
 config = edict()
 ########
