@@ -14,7 +14,7 @@ config.main.SUBMISSION = "data/TPS-FEV2021/sample_submission.csv"
 config.main.FOLD_FILE = "data/TPS-FEV2021/train_folds.csv"
 config.main.TASK = "REGRESSION"
 config.main.FOLD_NUMBER = 10
-config.main.FOLD_METHOD = "KF"
+config.main.SPLIT_SIZE = 0.2
 config.main.TARGET_VAR = "target"
 #######################
 # TRAINING PARAMETERS #

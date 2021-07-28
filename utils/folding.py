@@ -1,32 +1,27 @@
 import pandas as pd
 from sklearn import model_selection
 
-
-def create_folds(datapath, output_path, nb_folds, method = "KF", target=None):
+def create_splits(input_path, output_path, n_folds=5, split_size = 0.2, target=None):
     '''
-    Creating folds for cross validation
-    method must be one of KF, GKF, SKF
-    target if SKF is the stratify variable which distribution must remain constant accross folds
-    target if GKF is the group which must be non-overlapping
+    Creating splits for cross validation
     '''
-    df = pd.read_csv(datapath)
-    df["kfold"] = -1
+    df = pd.read_csv(input_path)
+    df["split"] = 0
     df = df.sample(frac=1).reset_index(drop=True)
-    y = None
-    if method == "KF":
-        kf = model_selection.KFold(n_splits=nb_folds)
-    if method == "GKF":
-        kf = model_selection.GroupKFold(n_splits=nb_folds)
-        y = df[target]
-    if method == "SKF":
-        kf = model_selection.StratifiedKFold(n_splits=nb_folds)
-        y = df[target]
-
-    if method == "KF":
-        for fold, (t_, v_) in enumerate(kf.split(X=df)):
-            df.loc[v_, 'kfold'] = fold
-    else:
+    y = df[target]
+    
+    # FOLDING
+    if n_folds >= 2:
+        kf = model_selection.StratifiedKFold(n_splits=n_folds)
         for fold, (t_, v_) in enumerate(kf.split(X=df, y=y)):
-            df.loc[v_, 'kfold'] = fold
+            df.loc[v_, 'split'] = fold
+
+    # TRAIN VALID SPLIT
+    elif n_folds < 2:
+        train, valid = model_selection.train_test_split(df, test_size=split_size, stratify=y)
+        for i in valid.index:
+            df.loc[i, "split"] = 1
+    else:
+        print("Please select a valid number of splits")
 
     df.to_csv(output_path, index=False)

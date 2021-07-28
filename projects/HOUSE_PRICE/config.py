@@ -15,7 +15,7 @@ config.main.SUBMISSION = "data/HOUSE_PRICE/sample_submission.csv"
 config.main.FOLD_FILE = "data/HOUSE_PRICE/train_folds.csv"
 config.main.TASK = "REGRESSION"
 config.main.FOLD_NUMBER = 5
-config.main.FOLD_METHOD = "SKF"
+config.main.SPLIT_SIZE = 0.2
 config.main.TARGET_VAR = "SalePrice"
 #######################
 # TRAINING PARAMETERS #

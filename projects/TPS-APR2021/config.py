@@ -14,7 +14,7 @@ config.main.SUBMISSION = "data/TPS-APR2021/sample_submission.csv"
 config.main.FOLD_FILE = "data/TPS-APR2021/train_folds.csv"
 config.main.TASK = "CLASSIFICATION"
 config.main.FOLD_NUMBER = 10
-config.main.FOLD_METHOD = "SKF"
+config.main.SPLIT_SIZE = 0.2
 config.main.TARGET_VAR = "Survived"
 #######################
 # TRAINING PARAMETERS #

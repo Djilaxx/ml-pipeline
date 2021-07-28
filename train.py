@@ -21,10 +21,10 @@ def train(run_number, folds=10, project="TPS-FEV2021", model_name="LGBM"):
     # RECORD RUNS USING WANDB TOOL
     wandb.init(config = config, project = project, name = complete_name + "_" + str(run_number))
     #CREATING FOLDS
-    folding.create_folds(datapath=config.main.TRAIN_FILE,
+    folding.create_splits(datapath=config.main.TRAIN_FILE,
                         output_path=config.main.FOLD_FILE,
-                        nb_folds = folds,
-                        method=config.main.FOLD_METHOD,
+                        n_folds = folds,
+                        split_size=config.main.SPLIT_SIZE,
                         target=config.main.TARGET_VAR)
                 
     # LOADING DATA FILE & TOKENIZER
@@ -44,14 +44,13 @@ def train(run_number, folds=10, project="TPS-FEV2021", model_name="LGBM"):
 
     # START FOLD LOOP
     Path(os.path.join(config.main.PROJECT_PATH, "model_saved/")).mkdir(parents=True, exist_ok=True)
-    train_preds = []
-    valid_preds = []
-    for fold in range(folds):
+
+    for fold in range(max(folds, 1)):
         print(f"Starting training for fold : {fold}")
         
         # CREATING TRAINING AND VALIDATION SETS
-        df_train = df[df.kfold != fold].reset_index(drop=True)
-        df_valid = df[df.kfold == fold].reset_index(drop=True)
+        df_train = df[df.split != fold].reset_index(drop=True)
+        df_valid = df[df.split == fold].reset_index(drop=True)
 
         target_train = df_train[config.main.TARGET_VAR].values
         target_valid = df_valid[config.main.TARGET_VAR].values
@@ -77,7 +76,10 @@ def train(run_number, folds=10, project="TPS-FEV2021", model_name="LGBM"):
         wandb.log({f"Training score for fold : {fold}": training_score, f"Validation score for fold : {fold}": valid_score})
         # SAVING THE MODEL
         joblib.dump(model, f"{config.main.PROJECT_PATH}/model_saved/{complete_name}_model_{fold+1}_{run_number}.joblib.dat")
-
+        
+        # IF WE GO FOR A TRAIN - VALID SPLIT WE TRAIN ONE MODEL ONLY (folds=0 or 1)
+        if folds < 2:
+            break
 ##########
 # PARSER #
 ##########
