@@ -21,7 +21,7 @@ def train(run_number, folds=10, project="TPS-FEV2021", model_name="LGBM"):
     # RECORD RUNS USING WANDB TOOL
     wandb.init(config = config, project = project, name = complete_name + "_" + str(run_number))
     #CREATING FOLDS
-    folding.create_splits(datapath=config.main.TRAIN_FILE,
+    folding.create_splits(input_path=config.main.TRAIN_FILE,
                         output_path=config.main.FOLD_FILE,
                         n_folds = folds,
                         split_size=config.main.SPLIT_SIZE,
@@ -35,7 +35,7 @@ def train(run_number, folds=10, project="TPS-FEV2021", model_name="LGBM"):
     df, features = feature_eng(df)
 
     # MODEL
-    for name, func in inspect.getmembers(importlib.import_module(f"models.{complete_name}"), inspect.isfunction):
+    for name, func in inspect.getmembers(importlib.import_module(f"models.{model_name}"), inspect.isfunction):
         if name == complete_name:
             model = func(**config.model[complete_name])
     

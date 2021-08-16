@@ -10,7 +10,7 @@ class Trainer:
         self.model_name = self.model.__class__.__name__
     
     def fit(self, metric = None, es = None, verbose = None, predict_proba = False):
-        GBM_model = ["LGBMRegressor", "LGBMClassifier", "XGBRegressor", "XGBClassifier"]
+        GBM_model = ["LGBMRegressor", "LGBMClassifier", "XGBRegressor", "XGBClassifier", "CatBoostRegressor", "CatBoostClassifier"]
 
         # fit method is different for Boosted trees
         if self.model_name in GBM_model:

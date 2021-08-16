@@ -48,11 +48,11 @@ def predict(run_number, project="TPS-FEV2021", model_name = "LGBM", get_int_pred
             final_int_preds.append(pred_int)
         submission = pd.read_csv(config.main.SUBMISSION)
         submission[config.main.TARGET_VAR] = final_int_preds
-        submission.to_csv(f'projects/{project}/submission_{complete_name}.csv', index=False)
+        submission.to_csv(f'projects/{project}/submission_{complete_name}_{run_number}.csv', index=False)
     else:
         submission = pd.read_csv(config.main.SUBMISSION)
         submission[config.main.TARGET_VAR] = final_preds
-        submission.to_csv(f'projects/{project}/submission_{complete_name}.csv', index=False)
+        submission.to_csv(f'projects/{project}/submission_{complete_name}_{run_number}.csv', index=False)
 
 ##########
 # PARSER #

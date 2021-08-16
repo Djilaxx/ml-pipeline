@@ -129,3 +129,5 @@ model_saved/
 CREDIT_CARD/
 submission*
 wandb/
+catboost_info/
+data/TPS-AUG2021/
