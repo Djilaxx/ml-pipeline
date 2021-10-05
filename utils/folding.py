@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn import model_selection
 
-def create_splits(input_path, output_path, n_folds=5, split_size = 0.2, target=None):
+def create_splits(input_path, n_folds=5, split_size = 0.2, target=None):
     '''
     Creating splits for cross validation
     '''
@@ -24,4 +24,4 @@ def create_splits(input_path, output_path, n_folds=5, split_size = 0.2, target=N
     else:
         print("Please select a valid number of splits")
 
-    df.to_csv(output_path, index=False)
+    return df

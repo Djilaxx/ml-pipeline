@@ -131,3 +131,16 @@ submission*
 wandb/
 catboost_info/
 data/TPS-AUG2021/
+data/TPS-JUNE2021/
+data/TPS-APR2021/
+data/TPS-SEP2021/
+data/TPS-OCT2021/
+data/TPS-MAY2021/
+data/HOUSE_PRICE/
+projects/TPS-AUG2021/
+projects/TPS-JUNE2021/
+projects/TPS-APR2021/
+projects/TPS-SEP2021/
+projects/TPS-OCT2021/
+projects/TPS-MAY2021/
+projects/HOUSE_PRICE/

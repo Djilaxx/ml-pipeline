@@ -21,18 +21,13 @@ def train(run_number, folds=10, project="TPS-FEV2021", model_name="LGBM"):
     # RECORD RUNS USING WANDB TOOL
     wandb.init(config = config, project = project, name = complete_name + "_" + str(run_number))
     #CREATING FOLDS
-    folding.create_splits(input_path=config.main.TRAIN_FILE,
-                        output_path=config.main.FOLD_FILE,
-                        n_folds = folds,
-                        split_size=config.main.SPLIT_SIZE,
-                        target=config.main.TARGET_VAR)
+    df = folding.create_splits(input_path=config.main.TRAIN_FILE,
+                            n_folds = folds,
+                            split_size=config.main.SPLIT_SIZE,
+                            target=config.main.TARGET_VAR)
                 
-    # LOADING DATA FILE & TOKENIZER
-    df = pd.read_csv(config.main.FOLD_FILE)
-
     # FEATURE ENGINEERING
     feature_eng = getattr(importlib.import_module(f"projects.{project}.feature_eng"), "feature_engineering")
-    df, features = feature_eng(df)
 
     # MODEL
     for name, func in inspect.getmembers(importlib.import_module(f"models.{model_name}"), inspect.isfunction):
@@ -50,11 +45,12 @@ def train(run_number, folds=10, project="TPS-FEV2021", model_name="LGBM"):
         
         # CREATING TRAINING AND VALIDATION SETS
         df_train = df[df.split != fold].reset_index(drop=True)
+        df_train, features = feature_eng(df_train, train=True)
         df_valid = df[df.split == fold].reset_index(drop=True)
+        df_valid, _ = feature_eng(df_valid, train=False)
 
         target_train = df_train[config.main.TARGET_VAR].values
         target_valid = df_valid[config.main.TARGET_VAR].values
-        
         # STARTING THE TRAINER
         trainer = Trainer(
             model = model, 

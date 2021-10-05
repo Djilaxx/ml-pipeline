@@ -23,7 +23,7 @@ config.train = edict()
 config.train.ES = 200
 config.train.VERBOSE = 1000
 config.train.METRIC = "AUC"
-config.train.PREDICT_PROBA = False
+config.train.PREDICT_PROBA = True
 
 ####################
 # MODEL PARAMETERS #

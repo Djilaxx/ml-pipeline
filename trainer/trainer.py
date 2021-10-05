@@ -11,7 +11,6 @@ class Trainer:
     
     def fit(self, metric = None, es = None, verbose = None, predict_proba = False):
         GBM_model = ["LGBMRegressor", "LGBMClassifier", "XGBRegressor", "XGBClassifier", "CatBoostRegressor", "CatBoostClassifier"]
-
         # fit method is different for Boosted trees
         if self.model_name in GBM_model:
             self.model.fit(self.train_x, self.train_y, eval_set=[(self.valid_x, self.valid_y)], early_stopping_rounds=es, verbose=verbose)
