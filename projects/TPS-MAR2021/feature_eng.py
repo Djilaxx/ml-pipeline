@@ -9,7 +9,7 @@ def cat_encoding(dataframe):
         dataframe[feature] = le.transform(dataframe[feature])
     return dataframe
 
-def feature_engineering(dataframe):
+def feature_engineering(dataframe, train=False):
     dataframe = cat_encoding(dataframe)
     drop_variables = ["cat5", "cat3", "cat9", "cat12", "cont10", "cont7", "cat10", "cont0", "cat8", "cat13"]
     dataframe = dataframe.drop(drop_variables, axis=1)

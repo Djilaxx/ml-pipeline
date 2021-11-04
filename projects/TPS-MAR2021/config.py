@@ -13,7 +13,8 @@ config.main.TEST_FILE = "data/TPS-MAR2021/test.csv"
 config.main.SUBMISSION = "data/TPS-MAR2021/sample_submission.csv"
 config.main.FOLD_FILE = "data/TPS-MAR2021/train_folds.csv"
 config.main.TASK = "CLASSIFICATION"
-config.main.FOLD_NUMBER = 10
+config.main.SPLIT = False
+config.main.FOLD_NUMBER = 5
 config.main.SPLIT_SIZE = 0.2
 config.main.TARGET_VAR = "target"
 #######################

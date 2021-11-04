@@ -4,15 +4,35 @@ from sklearn.feature_selection import SelectKBest, SelectPercentile, VarianceThr
 
 # From https://github.com/abhishekkrthakur/approachingalmost
 class UnivariateFeatureSelction:
-    def __init__(self, n_features, problem_type, scoring, return_cols=True):
+    def __init__(
+        self, 
+        n_features, 
+        problem_type, 
+        scoring, 
+        return_cols=True
+    ):
         """
         Custom univariate feature selection wrapper on
         different univariate feature selection models from
         scikit-learn.
-        :param n_features: SelectPercentile if float else SelectKBest
-        :param problem_type: classification or regression
-        :param scoring: scoring function, string
+
+        Parameters
+        ----------
+        n_features: int or float
+            SelectPercentile if float else SelectKBest
+        problem_type: str
+            classification or regression
+        scoring: str
+            scoring function :
+                - f_classif, chi2 or mutual_info_classif for classification
+                - f_regression or mutual_info_regression for regression
+
+        Returns
+        -------
+        selected_features: list
+            list of features selected by the algorithm.
         """
+
         self.n_features = n_features
         
         if problem_type == "classification":

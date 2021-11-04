@@ -64,7 +64,9 @@ def feature_engineering(dataframe, train=True):
     dataframe = year_var(dataframe)
     features_cat = get_cat_features(dataframe)
     dataframe = cat_encoding(dataframe, features_cat)
-    if train==True:
-        features = feature_select(dataframe)
+    if train:
+        features = dataframe.columns.difference(["Id", "SalePrice", 'kfold'])
+    else:
+        features = dataframe.columns.difference(["Id"])
     # RETURN DATAFRAME & ALL FEATURES NEEDED FOR TRAINING OR PREDICTION
     return dataframe, features

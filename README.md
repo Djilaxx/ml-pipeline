@@ -1,9 +1,9 @@
 # MACHINE LEARNING PIPELINE
 
-This project is a machine learning pipeline that i created to be able to iterate fast when i start a working on a new project. \
+This project is a machine learning pipeline that i created to be able to iterate fast when i start a working on a new machine learning project. \
 
 ## Project
-The pipeline is articulated around the project folder. Each subfolder in project/ will contain the necessary informations for a model to be trained.
+The pipeline is articulated around the project folder. Each subfolder in project/ will contain the necessary informations for a model to be trained on specific dataset.
 * **config.py** : Should contain all the necessary information needed to train a model, things like data path, hyperparameters, training parameters etc..
 * **feature_eng.py** : All the preprocessing functions needed for your data to be training ready.
 
@@ -11,33 +11,39 @@ The pipeline is articulated around the project folder. Each subfolder in project
 <hr />
 
 ### **Prerequisites**
+
+I use miniconda3 to manage my python environnements and packages. \
+You can download the package manager here : https://docs.conda.io/en/latest/miniconda.html
+
+You can use the following command to create the environnement I used:
 ```
-python -m pip install -r requirements.txt
+conda env create --name ML-37 --file=ML-37.yml
 ```
 
 ### **Train**
 
 ```
 python -m train
---run_number=1
---folds=10 
 --project=TPS-FEV2021 
 --model_name=LGBM 
+--run_note=test
 ```
 
-* **run_number** : int, allow you to track the number of training runs you did on a project
-* **folds** : int, number of folds - if folds=5 we'll divide the dataset in five part and train five models (each model will be trained on four part and validated on the last)
-* **project** : the project name you want to train a model on. 
-* **model_name** : the name of the model you want to train 
+* **project** : str - the project name you want to train a model on. 
+* **model_name** : str - the name of the model you want to train 
+* **run_note** : str - specify a number or special note about this training run
+
 
 ### **Predict**
 
 ```
 python -m predict
---run_number=1
 --project=TPS-FEV2021 
---model_name=LGBM 
+--model_name=LGBM
+--run_note=test
 ```
+
+the predict command is used to use a trained model on new test data and create a prediction file.
 
 ### Notebooks
 the notebooks/ folder contain many Jupyter notebooks with baseline code for different task that can help when building a model for a project, things like model selection, feature selection, basic EDA, hyperparameter optimization, model evaluation etc...

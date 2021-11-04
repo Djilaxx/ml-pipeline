@@ -7,12 +7,13 @@ config = edict()
 # main is the config section related to basic info on the project
 # data repo, data format, folding etc... data preparation
 config.main = edict()
-config.main.PROJECT_PATH = "projects/TPS-MAR2021/"
-config.main.TRAIN_FILE = "data/TPS-MAR2021/train.csv"
-config.main.TEST_FILE = "data/TPS-MAR2021/test.csv"
-config.main.SUBMISSION = "data/TPS-MAR2021/sample_submission.csv"
-config.main.FOLD_FILE = "data/TPS-MAR2021/train_folds.csv"
+config.main.PROJECT_PATH = "projects/TPS-JUNE2021/"
+config.main.TRAIN_FILE = "data/TPS-JUNE2021/train.csv"
+config.main.TEST_FILE = "data/TPS-JUNE2021/test.csv"
+config.main.SUBMISSION = "data/TPS-JUNE2021/sample_submission.csv"
+config.main.FOLD_FILE = "data/TPS-JUNE2021/train_folds.csv"
 config.main.TASK = "CLASSIFICATION"
+config.main.SPLIT = True
 config.main.FOLD_NUMBER = 10
 config.main.SPLIT_SIZE = 0.2
 config.main.TARGET_VAR = "target"
@@ -23,7 +24,7 @@ config.train = edict()
 config.train.ES = 200
 config.train.VERBOSE = 1000
 config.train.METRIC = "AUC"
-config.train.PREDICT_PROBA = False
+config.train.PREDICT_PROBA = True
 
 ####################
 # MODEL PARAMETERS #

@@ -7,33 +7,34 @@ config = edict()
 # main is the config section related to basic info on the project
 # data repo, data format, folding etc... data preparation
 config.main = edict()
-config.main.PROJECT_PATH = "projects/TPS-AUG2021/"
-config.main.TRAIN_FILE = "data/TPS-AUG2021/train.csv"
-config.main.TEST_FILE = "data/TPS-AUG2021/test.csv"
-config.main.SUBMISSION = "data/TPS-AUG2021/sample_submission.csv"
+config.main.PROJECT_PATH = "projects/TPS-AUG2021/"                  # PATH TO PROJECT
+config.main.TRAIN_FILE = "data/TPS-AUG2021/train.csv"               # PATH TO TRAINING CSV FILE
+config.main.TEST_FILE = "data/TPS-AUG2021/test.csv"                 # PATH TO TEST CSV FILE
+config.main.SUBMISSION = "data/TPS-AUG2021/sample_submission.csv"   # PATH TO SUBMISSION FILE IF PROVIDED
 config.main.FOLD_FILE = "data/TPS-AUG2021/train_folds.csv"
-config.main.TASK = "REGRESSION"
-config.main.FOLD_NUMBER = 10
-config.main.SPLIT_SIZE = 0.2
-config.main.TARGET_VAR = "loss"
-config.main.TARGET_CONTINUOUS = False
+config.main.TASK = "REGRESSION"                                     # TASK - REGRESSION OR CLASSIFICATION
+config.main.SPLIT = False                                           # IF SET TO TRUE - DATASET WILL BE SPLIT IN TWO (TRAIN AND VALIDATION) AND TRAINED ONE TIME - IF FALSE WILL CREATE FOLD_NUMBER OF SPLITS IN THE DATASET AND TRAIN MULTIPLE TIMES
+config.main.FOLD_NUMBER = 5                                        # NOT IMPORTANT IF SPLIT = True - ONLY USED IF CREATING MULTIPLE SPLITS
+config.main.SPLIT_SIZE = 0.2                                        # SPLIT_SIZE OF VALIDATION SET 
+config.main.TARGET_VAR = "loss"                                     # NAME OF THE TARGET VAR
+
 #######################
 # TRAINING PARAMETERS #
 #######################
 config.train = edict()
-config.train.ES = 20
-config.train.VERBOSE = 1000
-config.train.METRIC = "MSE"
-config.train.PREDICT_PROBA = False
+config.train.ES = 20                                                # NUMBER OF ITERATION WITHOUT VALIDATION LOSS IMPROVING BEFORE WE STOP TRAINING
+config.train.VERBOSE = 1000 
+config.train.METRIC = "MSE"                                         # TRAINING METRIC
+config.train.PREDICT_PROBA = False                                  # SHOULD PREDICTIONS BE INT OR PROBABILITY-LIKE VALUES (ONLY FOR CLASSIFICATION TAKS)
 ####################
 # MODEL PARAMETERS #
 ####################
 ###################
 # HYPERPARAMETERS #
 ###################
-config.model = edict()
+config.model = edict()                                              # HYPERPARAMETERS FOR MODELS
 
-config.model.LIN_REGRESSION = {}
+config.model.LINEAR_REGRESSION = {}
 config.model.LGBM_REGRESSION = {
     'reg_alpha': 0.04616889056961417,
     'reg_lambda': 1.826326408952523,

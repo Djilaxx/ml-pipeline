@@ -13,6 +13,7 @@ config.main.TEST_FILE = "data/TPS-FEV2021/test.csv"
 config.main.SUBMISSION = "data/TPS-FEV2021/sample_submission.csv"
 config.main.FOLD_FILE = "data/TPS-FEV2021/train_folds.csv"
 config.main.TASK = "REGRESSION"
+config.main.SPLIT = False
 config.main.FOLD_NUMBER = 10
 config.main.SPLIT_SIZE = 0.2
 config.main.TARGET_VAR = "target"
@@ -32,7 +33,7 @@ config.train.PREDICT_PROBA = False
 ###################
 config.model = edict()
 
-config.model.LIN_REGRESSION = {}
+config.model.LINEAR_REGRESSION = {}
 config.model.LGBM_REGRESSION = {
     'reg_alpha': 6.147694913504962,
     'reg_lambda': 0.002457826062076097,
