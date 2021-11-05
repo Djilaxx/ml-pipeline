@@ -77,14 +77,14 @@ class Trainer:
         
     # Prediction on the training set
         if self.proba is True:
-            predictions = self.model.predict(self.train_x)
-            predictions_proba_full = self.model.predict_proba(self.train_x)
-            predictions_proba = self.model.predict_proba(self.train_x)[:, 1]
-            metric_score = self.metric(self.train_y, predictions_proba)
+            preds_proba_full = self.model.predict_proba(self.train_x)
+            preds_proba = preds_proba_full[:, 1]
+            preds_int = preds_proba_full.argmax(axis=1)
+            metric_score = self.metric(self.train_y, preds_proba)
             return {
-                "preds" : predictions,
-                "preds_proba_full": predictions_proba_full,
-                "preds_proba" : predictions_proba,
+                "preds": preds_int,
+                "preds_proba_full": preds_proba_full,
+                "preds_proba": preds_proba,
                 "score" : metric_score
             }
         else:
@@ -119,17 +119,18 @@ class Trainer:
         """
 
         if self.proba is True:
-            predictions = self.model.predict(self.valid_x)
-            predictions_proba_full = self.model.predict_proba(self.train_x)
-            predictions_proba = self.model.predict_proba(self.valid_x)[:, 1]
-            metric_score = self.metric(self.valid_y, predictions)
+            preds_proba_full = self.model.predict_proba(self.valid_x)
+            preds_proba = preds_proba_full[:, 1]
+            preds_int = preds_proba_full.argmax(axis=1)
+            metric_score = self.metric(self.valid_y, preds_proba)
             print(f"Validation score {metric_score}")
             return {
-                "preds": predictions,
-                "preds_proba_full": predictions_proba_full,
-                "preds_proba": predictions_proba,
+                "preds": preds_int,
+                "preds_proba_full": preds_proba_full,
+                "preds_proba": preds_proba,
                 "score": metric_score
             }
+
         else:
             predictions = self.model.predict(self.valid_x)
             metric_score = self.metric(self.valid_y, predictions)
