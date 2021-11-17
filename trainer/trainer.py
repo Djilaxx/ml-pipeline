@@ -10,17 +10,20 @@ class Trainer:
     model: object
         the model object that is to be fitted
     train_x: list
-
+        list containing training observations
     features: list
+        list of names of features we want to use for training
     train_y: list
+        list of values for the target variable in the training set
     valid_x: list
+        list containing validation observations
     valid_y: list
+        list of values for the target variable in the validation set
     metric: object
+        function for the metric selected
     proba: boolean
+        if True the trainer will keep predictions as probability scores (useful for metrics like AUC which need proba-like values)
 
-    Returns
-    -------
-    
     """
     def __init__(
         self, 
